@@ -9,23 +9,22 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.mycinema.R
+import com.example.mycinema.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
+    lateinit var binding: FragmentHomeBinding
     private lateinit var homeViewModel: HomeViewModel
+
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-                ViewModelProvider(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding.textHome.text = "안녕";
+
+        return binding.root
     }
 }
