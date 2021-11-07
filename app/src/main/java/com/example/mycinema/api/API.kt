@@ -12,12 +12,56 @@ import java.net.URL
 import java.net.URLEncoder
 
 class API {
-    fun main() {
+    fun searchMovie(input: String):List<String> {
+        val movies = mutableListOf<String>()
         var client = Client()
 
         var text: String? = null
         try {
-            text = URLEncoder.encode("해리포터", "UTF-8")
+            text = URLEncoder.encode(input, "UTF-8")
+        } catch (e: UnsupportedEncodingException) {
+            throw RuntimeException("검색어 인코딩 실패", e)
+        }
+
+        val apiURL = "https://openapi.naver.com/v1/search/movie?query=" + text!!
+
+        val requestHeaders : HashMap<String, String> = HashMap()
+        requestHeaders.put("X-Naver-Client-Id", client.clientId)
+        requestHeaders.put("X-Naver-Client-Secret", client.clientSecret)
+        val responseBody = get(apiURL, requestHeaders)
+
+//        parseData(responseBody)
+
+        var title: String
+        var star: Int
+
+        var jsonObject: JSONObject? = null
+        try {
+            jsonObject = JSONObject(responseBody)
+            val jsonArray = jsonObject.getJSONArray("items")
+
+            for (i in 0 until jsonArray.length()) {
+                val item = jsonArray.getJSONObject(i)
+                title = item.getString("title")
+                star = item.getInt("userRating")
+
+                movies.add("TITLE : $title, star : $star");
+//                return "TITLE : $title, star : $star";
+            }
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+
+        return movies;
+    }
+
+    fun main(input: String) {
+        var client = Client()
+
+        var text: String? = null
+        try {
+            text = URLEncoder.encode(input, "UTF-8")
         } catch (e: UnsupportedEncodingException) {
             throw RuntimeException("검색어 인코딩 실패", e)
         }

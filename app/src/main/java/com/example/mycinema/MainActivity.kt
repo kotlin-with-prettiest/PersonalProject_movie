@@ -11,6 +11,8 @@ import com.example.mycinema.api.API
 
 class MainActivity : AppCompatActivity() {
 
+    var api = API()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,8 +27,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         val thread = Thread {
-            var api = API()
-            api.main()
+            api.main("해리포터")
         }.start()
     }
 }
