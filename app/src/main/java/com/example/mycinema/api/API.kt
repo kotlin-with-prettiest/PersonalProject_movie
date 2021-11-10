@@ -3,6 +3,7 @@ package com.example.mycinema.api
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.mycinema.client.Client
+import com.example.mycinema.data.Movie
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.*
@@ -47,6 +48,47 @@ class API {
 
                 movies.add("TITLE : $title, star : $star");
 //                return "TITLE : $title, star : $star";
+            }
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+
+        return movies;
+    }
+
+    fun searchMovieToMovie(input: String):List<Movie> {
+        val movies = mutableListOf<Movie>()
+        var client = Client()
+
+        // input encoding
+        var text: String? = null
+        try {
+            text = URLEncoder.encode(input, "UTF-8")
+        } catch (e: UnsupportedEncodingException) {
+            throw RuntimeException("검색어 인코딩 실패", e)
+        }
+
+        //url
+        val apiURL = "https://openapi.naver.com/v1/search/movie?query=" + text!!
+
+        //login
+        val requestHeaders : HashMap<String, String> = HashMap()
+        requestHeaders.put("X-Naver-Client-Id", client.clientId)
+        requestHeaders.put("X-Naver-Client-Secret", client.clientSecret)
+        val responseBody = get(apiURL, requestHeaders)
+
+
+        //json to object
+        var jsonObject: JSONObject? = null
+        try {
+            jsonObject = JSONObject(responseBody)
+            val jsonArray = jsonObject.getJSONArray("items")
+
+            for (i in 0 until jsonArray.length()) {
+                val item = jsonArray.getJSONObject(i)
+
+                movies.add(Movie(item.getString("title"),item.getString("director"), item.getInt("userRating"), item.getString("image")))
             }
 
         } catch (e: JSONException) {

@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        val thread = Thread {
-            api.main("해리포터")
-        }.start()
+//        val thread = Thread {
+//            api.main("해리포터")
+//        }.start()
     }
 }

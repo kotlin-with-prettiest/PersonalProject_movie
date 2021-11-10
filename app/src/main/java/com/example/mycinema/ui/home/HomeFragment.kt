@@ -30,18 +30,19 @@ class HomeFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        binding.textHome.text = "영화를 검색하세요";
+
+        binding.recyclerView.setHasFixedSize(true)
 
         binding.searchButton.setOnClickListener {
+
             CoroutineScope(Dispatchers.Main).launch {
                 val html = CoroutineScope(Dispatchers.IO).async {
-                    api.searchMovie(binding.textInput.text.toString()).toString()
+                    api.searchMovieToMovie(binding.textInput.text.toString())
                 }.await()
 
-                binding.textHome.text = html
+                binding.recyclerView.adapter = context?.let { it1 -> ItemAdapter(it1, html) }
             }
         }
-
         return binding.root
     }
 }
