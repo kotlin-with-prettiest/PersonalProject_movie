@@ -1,6 +1,7 @@
 package com.example.mycinema.ui.dashboard
 
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,23 +10,28 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.mycinema.R
+import com.example.mycinema.databinding.FragmentDashboardBinding
+
+
+//import com.example.mycinema.databinding
 
 class DashboardFragment : Fragment() {
 
     private lateinit var dashboardViewModel: DashboardViewModel
+    lateinit var binding: FragmentDashboardBinding
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-                ViewModelProvider(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+        binding = FragmentDashboardBinding.inflate(inflater, container, false)
+
+//        binding.TextTitle.text = arguments?.getString("title")
+        binding.TextTitle.setText(arguments?.getString("title"))
+        binding.TextDirector.setText(arguments?.getString("director"))
+        binding.TextStar.setText(arguments?.getString("star"))
+
+        return binding.root
     }
 }

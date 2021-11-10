@@ -8,8 +8,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.mycinema.R
 import com.example.mycinema.api.API
+import com.example.mycinema.data.Movie
 import com.example.mycinema.databinding.FragmentHomeBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +25,8 @@ class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding //ViewBinding
     private lateinit var homeViewModel: HomeViewModel
     var movies = "";
+    var initHtml = listOf<Movie>(Movie("영화를 검색하세요.", "", 0, ""))
+    var cla = this;
 
     var api = API()
 
@@ -33,6 +39,8 @@ class HomeFragment : Fragment() {
 
         binding.recyclerView.setHasFixedSize(true)
 
+        binding.recyclerView.adapter = context?.let { it1 -> ItemAdapter(it1, initHtml) } //
+
         binding.searchButton.setOnClickListener {
 
             CoroutineScope(Dispatchers.Main).launch {
@@ -40,6 +48,11 @@ class HomeFragment : Fragment() {
                     api.searchMovieToMovie(binding.textInput.text.toString())
                 }.await()
 
+                for (h in html) {
+                    println(h)
+                }
+
+                initHtml = html
                 binding.recyclerView.adapter = context?.let { it1 -> ItemAdapter(it1, html) }
             }
         }
