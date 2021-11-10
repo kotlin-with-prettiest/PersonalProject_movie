@@ -9,23 +9,32 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.mycinema.R
+import com.example.mycinema.databinding.FragmentNotificationsBinding
 
 class NotificationsFragment : Fragment() {
 
     private lateinit var notificationsViewModel: NotificationsViewModel
+    lateinit var binding: FragmentNotificationsBinding //ViewBinding
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        notificationsViewModel =
-                ViewModelProvider(this).get(NotificationsViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_notifications, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
-        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+        binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+
+//        binding.textNotifications.text = "제목 : ".plus(arguments?.getString("title"))
+        binding.textTitle.text = "제목 : ".plus(arguments?.getString("title"))
+        binding.textDirector.text = "감독 : ".plus(arguments?.getString("director"))
+        binding.textWith.text = "함께 본 사람 : ".plus(arguments?.getString("with"))
+        binding.textStar.text = "평점 : ".plus(arguments?.getString("star"))
+        binding.textDate.text = "날짜 : ".plus(arguments?.getString("date"))
+        binding.textPlace.text = "장소 : ".plus(arguments?.getString("place"))
+        binding.textReview.text = "리뷰 : ".plus(arguments?.getString("review"))
+        binding.textOneLine.text = "한줄평 : ".plus(arguments?.getString("oneLine"))
+
+        return binding.root
     }
+
+
 }
