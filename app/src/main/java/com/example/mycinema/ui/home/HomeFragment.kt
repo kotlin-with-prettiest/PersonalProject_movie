@@ -25,7 +25,7 @@ class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding //ViewBinding
     private lateinit var homeViewModel: HomeViewModel
     var movies = "";
-    var initHtml = listOf<Movie>(Movie("영화를 검색하세요.", "", 0, ""))
+    var initHtml = listOf<Movie>()
     var cla = this;
 
     var api = API()

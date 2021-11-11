@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:hint="영화 제목" />
+            android:hint="영화를 검색하세요" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
