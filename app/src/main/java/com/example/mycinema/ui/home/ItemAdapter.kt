@@ -53,6 +53,7 @@ class ItemAdapter(private val context: Context, private val dataset: List<Movie>
         holder.textViewStar.text = "⭐".plus(item.star.toString())
 //        holder.bind(item.title)
 
+
         holder.apply {
             with(holder.itemView) {
                 itemView.setOnClickListener{
