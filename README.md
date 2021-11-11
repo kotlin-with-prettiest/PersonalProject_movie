@@ -71,7 +71,7 @@ apiURL = "/v1/search/movie?query=" + text!!
 <br>
 
 - RecyclerView - Adapter ⭕
-- App theme ❌
+- App theme ⭕
 - Navigation - Activities ⭕
 - Navigation Component - Fragment ⭕
 - ViewModel - LiveData ❌
