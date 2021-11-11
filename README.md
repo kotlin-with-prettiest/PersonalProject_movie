@@ -88,3 +88,4 @@ apiURL = "/v1/search/movie?query=" + text!!
 ## 영상
 
 [😎 ver 0.000001](https://drive.google.com/file/d/1DQV_9172L25BzJ5XExArhOb-P9y4bm8P/view?usp=sharing)
+[😎 ver 0.000002](https://drive.google.com/file/d/1CdjE80DM26He_sbf2ivaMPSsSTLNUj50/view?usp=sharing)
